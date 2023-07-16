@@ -1,24 +1,21 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-ctx.canvas.width = window.innerWidth;
-ctx.canvas.height = window.innerHeight;
-
 let particles = [];
-
 const PARTICLE_COUNT = 1000;
 const MASS_MAX = 1000;
 const G = 10;
-const TIME_STEP = 0.001;
-const MIN_DISTANCE_SQ = 100;
-
-let clietnX, clientY;
+const TIME_STEP = 0.005;
+const MIN_DISTANCE_SQ = 100 ** 2;
 
 function randomRange(min, max) {
     return Math.random() * (max - min) + min;
 }
 
 function initializeParticles() {
+    ctx.canvas.width = window.innerWidth;
+    ctx.canvas.height = window.innerHeight;
+
     for (let i = 0; i < PARTICLE_COUNT; i++) {
         let x = randomRange(0, canvas.width);
         let y = randomRange(0, canvas.height);
@@ -37,34 +34,31 @@ function initializeParticles() {
     }
 }
 
-document.addEventListener("mousemove", (event) => {
-    clientX = event.clientX;
-    clientY = event.clientY;
-});
-
-initializeParticles();
-
 function calculateForces() {
+    const len = particles.length;
     particles.forEach((particle, indexa) => {
         let ax = 0;
         let ay = 0;
 
-        particles.forEach((other, indexb) => {
-            if (particle !== other) {
-                let dx = other.x - particle.x;
-                let dy = other.y - particle.y;
-                let distance = Math.sqrt(dx * dx + dy * dy);
+        for (let indexb = 0; indexb < len; indexb++) {
+            if (indexa === indexb) continue;
+            let other = particles[indexb];
 
-                if (distance > MIN_DISTANCE_SQ) {
-                    let force =
-                        (G * (particle.mass * other.mass)) / distance ** 2;
-                    force /= Math.sqrt(particle.mass);
+            let dx = other.x - particle.x;
+            let dy = other.y - particle.y;
 
-                    ax += force * (dx / distance);
-                    ay += force * (dy / distance);
-                }
+            let distanceSquared = dx ** 2 + dy ** 2;
+            let distance_c = Math.sqrt(dx ** 2 + dy ** 2);
+
+            if (distanceSquared > MIN_DISTANCE_SQ) {
+                let force =
+                    (G * (particle.mass * other.mass)) / distanceSquared;
+                force /= Math.sqrt(particle.mass);
+
+                ax += (force * dx) / Math.sqrt(distanceSquared);
+                ay += (force * dy) / Math.sqrt(distanceSquared);
             }
-        });
+        }
 
         particle.ax = ax;
         particle.ay = ay;
@@ -89,20 +83,14 @@ function updateParticles() {
     });
 }
 
-ctx.fillStyle = "white";
-
-const MAX_ITERS = 10000;
-let iterations = 0;
-
 function draw() {
-    iterations += 1;
-    if (iterations >= MAX_ITERS) return;
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     calculateForces();
     updateParticles();
 
+    ctx.fillStyle = "white";
     particles.forEach((particle) => {
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.radius, 0, 2 * Math.PI);
@@ -112,4 +100,5 @@ function draw() {
     requestAnimationFrame(draw);
 }
 
+initializeParticles();
 draw();
