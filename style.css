@@ -12,6 +12,25 @@ body {
     font-family: 'Victor Mono', monospace;
 }
 
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff #ffffff;
+}
+
+*::-webkit-scrollbar {
+    width: 9px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #000000;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    border-radius: 5px;
+    border: 2px solid #ffffff;
+}
+
 .hero {
     height: calc(100% - 4rem);
     width: calc(100% - 4rem);
@@ -24,8 +43,9 @@ body {
 }
 
 .section {
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 4rem);
+    width: calc(100% - 4rem);
+    padding: 2rem;
 }
 
 .hero>* {

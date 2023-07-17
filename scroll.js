@@ -8,7 +8,7 @@ const observer = new IntersectionObserver(
             else entry.target.classList.remove("scroll-animation");
         });
     },
-    { threshold: 0.5 }
+    { threshold: 0.4 }
 );
 
 for (let i = 0; i < animationTarget.length; i++) {
