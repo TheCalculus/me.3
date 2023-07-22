@@ -17,6 +17,6 @@ let delta = (new Date() - initial);
 delta /= 31536000000;
 
 setInterval(() => {
-    timer.innerHTML = delta;
+    timer.innerHTML = delta.toFixed(15);
     delta += 3.1709792e-10; // 10 / 31536000000
 }, 10);

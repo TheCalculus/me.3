@@ -134,6 +134,11 @@ body {
     opacity: 1;
 }
 
-.about {
-    
+.about>.timer {
+    font-size: 5rem;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
 }
