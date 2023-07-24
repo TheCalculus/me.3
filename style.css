@@ -40,6 +40,7 @@ body {
     flex-direction: column;
     align-items: end;
     justify-content: end;
+    z-index: -1000;
 }
 
 .section {
@@ -90,7 +91,8 @@ body {
 }
 
 .dashed-pattern {
-    background: repeating-linear-gradient(90deg, white, white 0.1rem, transparent 0, transparent 0.75rem);
+    /* background: repeating-linear-gradient(90deg, white, white 0.1rem, transparent 0, transparent 0.75rem); */
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.25), white);
 }
 
 .nav-container {
@@ -141,4 +143,21 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     margin: 0;
+}
+
+.showcase {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin: 5rem;
+    gap: 1rem;
+}
+
+.showcase-card {
+    padding: 1rem;
+    border: 3px solid white;
+}
+
+.showcase-card>img {
+    float: left;
+    margin: 1rem;
 }

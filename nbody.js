@@ -2,6 +2,7 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 let particles = [];
+let paused = false;
 
 const PARTICLE_COUNT = Math.floor(Math.random() * 1000);
 const G = 6.674 * 10e-3;
@@ -97,7 +98,8 @@ function draw() {
         ctx.fill();
     });
 
-    requestAnimationFrame(draw);
+    if (!paused)
+        requestAnimationFrame(draw);
 }
 
 initializeParticles();
@@ -106,6 +108,15 @@ draw();
 function resizeCanvas() {
     ctx.canvas.width = window.innerWidth;
     ctx.canvas.height = window.innerHeight;
+}
+
+function pause() {
+    pause = true;
+}
+
+function resume() {
+    pause = false;
+    requestAnimationFrame(draw);
 }
 
 addEventListener("resize", resizeCanvas);

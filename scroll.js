@@ -6,9 +6,11 @@ const observer = new IntersectionObserver(
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("scroll-animation");
+                entry.target.style.zIndex = "1000";
                 active++;
             } else {
                 entry.target.classList.remove("scroll-animation");
+                entry.target.style.zIndex = "-1000";
                 active++;
             }
         });
